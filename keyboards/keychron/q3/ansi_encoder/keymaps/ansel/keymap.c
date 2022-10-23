@@ -110,10 +110,43 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // { 63, __, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, __, 74, 86, 75 },
 // { 76, 77, 78, __, __, __, 79, __, __, __, 80, 81, 82, 83, 84, 85 },
 void rgb_matrix_indicators_user(void) {
-    rgb_matrix_set_color_all(50, 50, 50); // everything white
+    if (get_highest_layer(layer_state)) {
+        rgb_matrix_set_color_all(255, 255, 255); // everything white
+    } else {
+        rgb_matrix_set_color_all(50, 50, 50); // darken everything
+    }
+    // caps lock
+    if ((host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK))) {
+        rgb_matrix_set_color(50, 255, 0, 0); // Caps Lock
+        rgb_matrix_set_color(34, 255, 0, 0); // Q
+        rgb_matrix_set_color(35, 255, 0, 0); // W
+        rgb_matrix_set_color(36, 255, 0, 0); // E
+        rgb_matrix_set_color(37, 255, 0, 0); // R
+        rgb_matrix_set_color(38, 255, 0, 0); // T
+        rgb_matrix_set_color(39, 255, 0, 0); // Y
+        rgb_matrix_set_color(40, 255, 0, 0); // U
+        rgb_matrix_set_color(41, 255, 0, 0); // I
+        rgb_matrix_set_color(42, 255, 0, 0); // O
+        rgb_matrix_set_color(43, 255, 0, 0); // P
+        rgb_matrix_set_color(51, 255, 0, 0); // A
+        rgb_matrix_set_color(52, 255, 0, 0); // S
+        rgb_matrix_set_color(53, 255, 0, 0); // D
+        rgb_matrix_set_color(54, 255, 0, 0); // F
+        rgb_matrix_set_color(55, 255, 0, 0); // G
+        rgb_matrix_set_color(56, 255, 0, 0); // H
+        rgb_matrix_set_color(57, 255, 0, 0); // J
+        rgb_matrix_set_color(58, 255, 0, 0); // K
+        rgb_matrix_set_color(59, 255, 0, 0); // L
+        rgb_matrix_set_color(64, 255, 0, 0); // Z
+        rgb_matrix_set_color(65, 255, 0, 0); // X
+        rgb_matrix_set_color(66, 255, 0, 0); // C
+        rgb_matrix_set_color(67, 255, 0, 0); // V
+        rgb_matrix_set_color(68, 255, 0, 0); // B
+        rgb_matrix_set_color(69, 255, 0, 0); // N
+        rgb_matrix_set_color(70, 255, 0, 0); // M
+    }
     switch (get_highest_layer(layer_state)) {
         case BASE:
-            rgb_matrix_set_color_all(255, 255, 255); // everything white
             break;
         case FNCS:
             rgb_matrix_set_color(1, 0, 255, 0); // F1
@@ -149,6 +182,7 @@ void rgb_matrix_indicators_user(void) {
             rgb_matrix_set_color(24, 0, 255, 0); // *
             break;
         case MCRO:
+            rgb_matrix_set_color_all(0, 0, 0); // everything black
             rgb_matrix_set_color(0, 0, 255, 0); // esc
             rgb_matrix_set_color(1, 0, 255, 0); // F1
             rgb_matrix_set_color(2, 0, 255, 0); // F2
@@ -165,17 +199,3 @@ void rgb_matrix_indicators_user(void) {
             break;
     }
 }
-
-
-    // const rgblight_segment_t PROGMEM state_caps[] = RGBLIGHT_LAYER_SEGMENTS({34, 10, HSV_RED}, // q-p
-    //                                                                         {51, 9, HSV_RED},  // a-l
-    //                                                                         {64, 7, HSV_RED},  // z-m
-    //                                                                         {50, 1, HSV_RED}   // caps
-    // );
-
-
-// set caps lock state
-// bool led_update_user(led_t led_state) {
-//     rgblight_set_layer_state(4, led_state.caps_lock);
-//     return true;
-// }
